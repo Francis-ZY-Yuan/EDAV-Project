@@ -319,20 +319,18 @@ Write a first draft of the missing values chapter of your final project. You do 
 
 https://[ACCOUNT NAME].github.io/[REPO NAME]/missing-values.html
 
+#### Solution:
 
-(In final version, we omit the statements below)
+(In the final version, we will omit solutions here)
+
 We observe so many missing variables.
 
 ```{r}
-library(foreign)
-
-df55 <- read.spss("./W55_Oct19/ATP W55.sav", to.data.frame=TRUE)
+df55 <- foreign::read.spss("./W55_Oct19/ATP W55.sav", to.data.frame=TRUE)
 plot_missing(df55, percent = TRUE)
 ```
 ```{r}
-library(foreign)
-
-df33 <- read.spss("./W33_Mar18/ATP W33.sav", to.data.frame=TRUE)
+df33 <- foreign::read.spss("./W33_Mar18/ATP W33.sav", to.data.frame=TRUE)
 plot_missing(df33, percent = TRUE)
 ```
 
