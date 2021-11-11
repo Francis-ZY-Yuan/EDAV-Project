@@ -96,15 +96,22 @@ g2 <- ggplot(mycars_miss_count_g2,aes(x = rowid2_fct, y = miss_count2))+
           panel.grid.minor = element_line(colour = "grey97", size = 0.05))+
     coord_flip()
 
-x_textloc_g3 <- length(unique(mycars_miss_count$key))/2+0.5
-y_textloc_g3 <- unique(mycars_miss_count[mycars_miss_count$mod_missing==-1,]$rowid2_fct)
+
 
 g3 <- ggplot(mycars_miss_count, aes(x = key,y = rowid2_fct))+
   geom_tile(aes(fill = mod_missing), color = "white")+
-  scale_fill_manual(values = c("grey65", "grey80", "mediumpurple1"), guide="none")+
-  geom_text(x=x_textloc_g3, y=y_textloc_g3, label="complete cases")+
   labs(x = "variable", y= "missing pattern")+
   theme_classic()
+
+if(max(mycars_miss_count$compcases)==1){
+  x_textloc_g3 <- length(unique(mycars_miss_count$key))/2+0.5
+  y_textloc_g3 <- unique(mycars_miss_count[mycars_miss_count$mod_missing==-1,]$rowid2_fct)
+  g3 <- g3+ 
+        geom_text(x=x_textloc_g3, y=y_textloc_g3, label="complete cases")+
+        scale_fill_manual(values = c("grey65", "grey80", "mediumpurple1"), guide="none")
+} else {
+  g3 <- g3+scale_fill_manual(values = c("grey80", "mediumpurple1"), guide="none")
+}
 
  
 g1 + plot_spacer() + g3 + g2 +
@@ -245,14 +252,17 @@ if(max(df_miss_count_g2$miss_count2)<10){
 
 g3 <- ggplot(df_miss_count, aes(x = key,y = rowid2_fct))+
   geom_tile(aes(fill = mod_missing), color = "white")+
-  scale_fill_manual(values = c("grey65", "grey80", "mediumpurple1"), guide="none")+
   labs(x = "variable", y= "missing pattern")+
   theme_classic()
 
 if(max(df_miss_count$compcases)==1){
   x_textloc_g3 <- length(unique(df_miss_count$key))/2+0.5
   y_textloc_g3 <- unique(df_miss_count[df_miss_count$mod_missing==-1,]$rowid2_fct)
-  g3 <- g3 + geom_text(x=x_textloc_g3, y=y_textloc_g3, label="complete cases")
+  g3 <- g3+ 
+        geom_text(x=x_textloc_g3, y=y_textloc_g3, label="complete cases")+
+        scale_fill_manual(values = c("grey65", "grey80", "mediumpurple1"), guide="none")
+} else {
+  g3 <- g3+scale_fill_manual(values = c("grey80", "mediumpurple1"), guide="none")
 }
 
 
@@ -263,6 +273,9 @@ g1 + plot_spacer() + g3 + g2 +
 
 }
 
+```
+
+```{r}
 # Check the percent option for "mycar" data
 plot_missing(mycars, percent = TRUE)
 ```
@@ -305,3 +318,21 @@ c) Discuss a plan for dividing up the work for the final project and briefly sum
 Write a first draft of the missing values chapter of your final project. You do not have to include all of the data you use in the final project. Choose one file and analyze it using techniques discussed in class for missing values. Include a plot using your function from Q2 as well as verbal interpretation of the plot. Edit this link to point to your chapter:
 
 https://[ACCOUNT NAME].github.io/[REPO NAME]/missing-values.html
+
+
+(In final version, we omit the statements below)
+We observe so many missing variables.
+
+```{r}
+library(foreign)
+
+df55 <- read.spss("./W55_Oct19/ATP W55.sav", to.data.frame=TRUE)
+plot_missing(df55, percent = TRUE)
+```
+```{r}
+library(foreign)
+
+df33 <- read.spss("./W33_Mar18/ATP W33.sav", to.data.frame=TRUE)
+plot_missing(df33, percent = TRUE)
+```
+
