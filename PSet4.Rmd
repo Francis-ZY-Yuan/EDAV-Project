@@ -263,6 +263,7 @@ g1 + plot_spacer() + g3 + g2 +
 
 }
 
+# Check the percent option for "mycar" data
 plot_missing(mycars, percent = TRUE)
 ```
 
