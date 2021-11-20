@@ -1,64 +1,56 @@
-This is a template for the EDAV final project. It is based on the template created with *File, New Project..., New Directory, Book Project using bookdown* in RStudio. 
+## EDAV Project (The book URL: https://Francis-ZY-Yuan.github.io/EDAV-Project/)
 
+We want to deepen the insight given in the report by the Pew Research Center:
 
-## ABSOLUTE ESSENTIALS
+https://www.pewresearch.org/science/2019/11/25/u-s-public-views-on-climate-and-energy/
 
-*If you have any difficulties or have feedback of any kind, please file an issue.*
+1. Although the survey pointed out supported parties as a relevant factor, are educations or incomes also related to the opinion toward climate change issues (ex. whether the climate change is due to human activities or just natural patterns in global climate)? We address this issue upon trying to control other relevant effects such as supported parties.
+2. From the survey, it is seen that Democrats are more likely to say that the federal government is doing too little for key aspects of the environment, and Democrats are more likely to think the climate change is due to human activities. With respect to this, are Democrats (Republicans) also more (less) recognizing that the climate changes are affecting their local communities (no matter what the reason of the change is) in the first place? We address this issue upon trying to control other relevant effects such as regions.
+3. From the survey, it is seen that majority of people think that they should decrease the oil drilling or coal mining, and they should increase natural electricity generations such as one by wind or land heat. However, their opinion is separate with respect to whether they should increase the new clear power plants (Yes:49% vs No:49%). Here, how do factors (sex, age, party, income, regions,…) relate to the choice Yes and No.
+4. The survey includes some questions about the respondents’ personality. Is personality affecting one’s attitude towards climate changes and willingness to take actions to reduce climate change?
+5. Has the public’s attitude towards climate change evolved over time? Does this change correlate with the change in election outcomes? Is it different across regions and groups?
 
-### Copy this template
+ 
+### Database to be used
 
-- [ ] 1. Click the green "Use this template" button above.  DO NOT FORK THE REPO. Choose a descriptive name for your repo, such as "federalbudget" or "AIDSdeaths".  (If you change your mind before you do any work, delete your new repo and start over.)
+#### American Trends Panel (ATP) by the Pew Research Center
 
-- [ ] 2. In the Description field, write: "Bookdown source files for EDAV final project".
+https://www.pewresearch.org/american-trends-panel-datasets/
 
-### Set up GitHub Pages	
-- [ ] 1. On the home page of your repo, click Settings. Scroll down to the GitHub pages section and change **Source** from **None** to **main**, change **/ (root)** to **/docs** folder, and click Save. Above the **Source** line, a bar will appear with your book's URL. The bar will initially be blue and indicate that your book is *ready* to be published and will change to green once it is published. Copy the URL. (Note that sometimes there is a delay until your book actually appears at that URL. If it doesn't appear after a few minutes, make a change and commit it to trigger a GitHub Pages build.)	
+The Pew Research Center has been conducting nationwide randomized surveys on social issues for many years. Questions related to environmental issues include:
 
-- [ ] 2. Click the gear button near "About" on the home page of the repo and paste your book URL into the **Website** field that appears on the right.
+- The climate change is due to human activities or just natural patterns in global climate.
+- The federal government is doing too little for key aspects of the environment.
+- We should decrease oil drilling/ coal mining.
+- We should increase natural sources of electricity generations.
+- We should increase nuclear power plants.
 
-### Clone the repo
+It also includes basic attributes of respondents such as age, sex, political party, region, education and income, which enables us to connect those basic attributes to their opinion.
 
-- [ ] 1. Clone your new repo with *File, New Project..., Version Control, Git* in RStudio.
+The sample size is large enough (N > 1,000), and so is the number of variables (100+ questions). Since it has weights assigned to each sample in order to modify the imbalance of attributes of respondents compared to some benchmark sources such as *Gender 2017 American Community Survey*, we can present unbiased aggregated figures.
 
-### Edit some key files
+Climate change is a frequent topic in the ATP, so we can make comparison over time. (A note: since respondents to different surveys are not the same, it’s an aggregation of cross-sectional data instead of panel data.)
 
-- [ ] 1. In `index.Rmd`, change YOUR TITLE HERE to your title.
+#### US Election Data
 
-- [ ] 2. In `index.Rmd`, change YOUR NAMES HERE to your names.
+https://www.fec.gov/introduction-campaign-finance/election-and-voting-information/
 
-- [ ] 3. In `_bookdown.yml`, change YOUR GITHUB USERNAME to your GitHub username in the two places it appears.
+This is released by the Federal Election Commission and contains each state’s votes to each candidate in each federal election.
 
-- [ ] 4. In `_bookdown.yml`, change YOUR GITHUB REPO to your GitHub repo name in the two places it appears.
+#### How to answer the questions above using the data
 
-(Note that 3. and 4. provide links to the `.Rmd` files of your project for editing and viewing. If you move your `.Rmd` files you will need to update these file paths. Once your book is rendered, test that the edit (pen) and view (eye) buttons work.)
+- For question 1, the existing report above suggests the strong relationship between a party one supports and his/her opinion. Hence, we should control parties, when we conduct an analysis for this question. Here, this data is useful since we can calculate for each party whether there is a firm relationship of opinion toward each climate change issue with their incomes or educations.
 
-- [ ] 5. In `_output.yml`, change YOUR SHORT TITLE to a shortened version of your title. (Leave the "after:" line indicating that the book was published with bookdown as is.)
+- For question 2, the existing report above suggests people living in the Pacific region are more likely to experience some climate change. Here, it is known that there are more Democrats in the Pacific region. Hence, we should control regions, when we conduct an analysis for this question. This is where this data comes in since for every region we can calculate the proportions of those who are recognizing that the climate change is affecting their community among each party, comparing the proportions of the two parties in each region. 
 
-### Render the book
+- For question 1 and 2, we can also perform the statistical test of the difference of ratios.
 
-- [ ] 1. Install **bookdown** with `install.packages("bookdown")`. If you already have it, update to the most recent version.
+- For question 3, we can calculate and compare the proportions of Yes and No for each candidate factor such as sex, age, party, income and regions. We can also conduct the chi-squared t tests to add independent analyses.
 
-- [ ] 2. Render locally with `bookdown::render_book("index.Rmd")` or clicking the *Build book* button which should appear in the Build tab (in the same pane as Environment, History, Connections, ...).
+- For question 4, we can utilize the data from ATP Wave 33 (Apr 2018), Wave 55 (Oct 2019), and Wave 67 (Apr 2020), which contain similar questions about climate change. We can use parcoords to illustrate the change across time.
+- For question 5, since Waves 33 and Wave 67 are conducted on elections years, we can relate them with the outcomes of the elections. We can use a difference-in-difference method to check whether there's a correlation between the change in attitude towards climate change and the change in election outcomes. We can further analyze by region or by demographic factors.
 
-- [ ] 3. Use `browseURL("docs/index.html")` to view your book locally (or just open `index.html` in a browser).
-
-- [ ] 4. If it looks good, commit and push all changed files to GitHub. 
-
-(You will need to repeat steps 2 and 4 every time you wish to update the book online.)
-
-### Edit README	
-
-Once you've completed these steps, delete the content of this **README** and add a short description of your project with a link to the book URL. It would be appreciated if you add the following to the end:	
-
-*This repo was initially generated from a bookdown template available here: https://github.com/jtr13/EDAVtemplate.*	
-
-### Demo Video	
-
-A demo video showing how to create a **bookdown book** following these similar instructions: http://bit.ly/fiveminutebookdown Note that this video uses a different template.
-
-### Additional features	
-
-Please consult the official guide to **bookdown**: https://bookdown.org/yihui/bookdown
+*This repo was initially generated from a bookdown template available here: https://github.com/jtr13/EDAVtemplate.*
 
 
 
