@@ -30,6 +30,8 @@ mycars[10:20, 3:5] <- NA
 for (i in 1:10) mycars[sample(32,1), sample(11,1)] <- NA
 ```
 
+**We have written codes without using `scale_alpha_manual` and only using `scale_fill_manual` so that we can preserve `scale_alpha_manual` for some unknown additional modification needs in the future. Sorry about the redundant codes.**
+
 ```{r}
 library(ggnewscale)
 mycars_miss <- data.frame(is.na(mycars)) %>% 
@@ -129,7 +131,6 @@ missing_patterns <- data.frame(is.na(mycars)) %>%
 ```
 
 * To highlight the complete cases row you need a different fill scale than the one used to show missing vs. non-missing in the main plot (purple and grey in the example). This is a little tricky since you're only allowed one fill scale in **ggplot2**. You can either use `alpha` to control the highlight with `scale_alpha_manual(values = ...)` or use the **ggnewscale** package which provides for multiple fill scales in the same graph.
-
 
 ### 2. Missing value plot function
 
@@ -292,12 +293,16 @@ plot_missing(economics, percent = TRUE)
 
 c) Show the output for both options (counts / percent) for the `HollywoodMovies2011` dataset in the **Lock5withR** package. You can shorten the column names so they don't overlap in the plot.
 
+  - We have shorten the name of the columns by using the substring made up of the first three letters.
+
 ```{r}
-plot_missing(Lock5withR::HollywoodMovies2011)
+Holly <- Lock5withR::HollywoodMovies2011
+names(Holly) <- substring(names(Holly), 1, 3)
+plot_missing(Holly)
 ```
 
 ```{r}
-plot_missing(Lock5withR::HollywoodMovies2011, percent =TRUE)
+plot_missing(Holly, percent =TRUE)
 ```
 
 
@@ -305,32 +310,34 @@ plot_missing(Lock5withR::HollywoodMovies2011, percent =TRUE)
 
 a) Set up your final project repository following the [EDAVproject template](https://github.com/jtr13/EDAVtemplate). You can either choose one team member's GitHub account, or create an organization to house the final project. *Be sure to follow all of the steps in the README so your bookdown book renders with your information, not the placeholders in the template.* Edit the link below to point to your rendered book:
 
-https://[ACCOUNT NAME].github.io/[REPO NAME]
+    - https://Francis-ZY-Yuan.github.io/EDAV-Project
 
 b) Make sure that all team members have write access to the repository and have practiced making contributions. Edit the link below to point to your contributors page, showing that all team members have made contributions to the repo (Note that we do not have the ability to see who has write access, only who has contributed):
 
-https://github.com/[ACCOUNT NAME]/[REPO NAME]/graphs/contributors
+    - https://github.com/Francis-ZY-Yuan/EDAV-Project/graphs/contributors
 
 c) Discuss a plan for dividing up the work for the final project and briefly summarize what each person will do.
+
+    - Zhenyu Yuan: 
+  
+      - Be mainly responsible for resuls of Q4-Q5 in the Final Project Group Formation and Data Check.
+    
+      - Be responsible for effectively use the method in causal inference for all questions if any (Zhenyu is taking the **causal inference** class)
+      
+      - Be primarily responsible for an interacted component
+  
+    - Yuki Ikeda: 
+  
+      - Be mainly responsible for resuls of Q1-Q3 in the Final Project Group Formation and Data Check.
+    
+      - Be responsible for effectively use the method in statistical tests for all questions if any (Yuki is taking **statistical inference and modeling** class)
+      
+      - Be primarily responsible for data transformation and their reproducibility
 
 ### 4. Missing values chapter
 
 Write a first draft of the missing values chapter of your final project. You do not have to include all of the data you use in the final project. Choose one file and analyze it using techniques discussed in class for missing values. Include a plot using your function from Q2 as well as verbal interpretation of the plot. Edit this link to point to your chapter:
 
-https://[ACCOUNT NAME].github.io/[REPO NAME]/missing-values.html
-
-#### Solution:
-
-(In the final version, we will omit solutions here)
-
-We observe so many missing variables.
-
-```{r}
-df55 <- foreign::read.spss("./W55_Oct19/ATP W55.sav", to.data.frame=TRUE)
-plot_missing(df55, percent = TRUE)
-```
-```{r}
-df33 <- foreign::read.spss("./W33_Mar18/ATP W33.sav", to.data.frame=TRUE)
-plot_missing(df33, percent = TRUE)
-```
-
+  - https://Francis-ZY-Yuan.github.io/EDAV-Project/missing-values.html
+  
+  - Though very long at this moment of the first draft, we will fairly select and condense the content towards two graphs and comments as suggested. 
