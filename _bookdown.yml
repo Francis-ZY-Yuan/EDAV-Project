@@ -1,0 +1,10 @@
+book_filename: "finalproj"
+output_dir: docs
+delete_merged_file: true
+edit: https://github.com/Francis-ZY-Yuan/EDAV-Project/edit/main/%s
+view: https://github.com/Francis-ZY-Yuan/EDAV-Project/blob/main/%s
+language:
+  ui:
+    chapter_name: "Chapter "
+    
+before_chapter_script: "_common.R"
