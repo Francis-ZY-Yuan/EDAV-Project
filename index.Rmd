@@ -1,0 +1,9 @@
+--- 
+title: "Prolitical view and their attributes"
+author: "Zhenyu Yuan and Yuki Ikeda"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+---
+
+# Introduction
+

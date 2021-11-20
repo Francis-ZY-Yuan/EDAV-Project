@@ -1,0 +1,11 @@
+introduction
+data-sources
+data-transformation
+missing-values
+respondents-attributes
+q1.-opinion-toward-climate-change-factor-and-their-attributes
+q2.-opinion-toward-climate-change-impact-and-their-attributes
+q3.-opinion-toward-nuclear-power-and-their-attributes
+results
+interactive-component
+conclusion
