@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Interactive component | Political views and their attributes</title>
-  <meta name="description" content="Chapter 6 Interactive component | Political views and their attributes" />
+  <title>Chapter 3 Data transformation | Political views and their attributes</title>
+  <meta name="description" content="Chapter 3 Data transformation | Political views and their attributes" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Interactive component | Political views and their attributes" />
+  <meta property="og:title" content="Chapter 3 Data transformation | Political views and their attributes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Interactive component | Political views and their attributes" />
+  <meta name="twitter:title" content="Chapter 3 Data transformation | Political views and their attributes" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="results.html"/>
-<link rel="next" href="conclusion.html"/>
+<link rel="prev" href="data-sources.html"/>
+<link rel="next" href="missing-values.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -115,8 +115,17 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="interactive-component" class="section level1" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Interactive component</h1>
+<div id="data-transformation" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
+<p>In this chapter, we briefly explain the data transformation process for exploratory analyses with R.</p>
+<p>Since, the data is already well-formatted as .sav files, we only imported them into dataframes and only rendered some factor re-labeings or re-namings after analyzing the missing value patterns.</p>
+<p>Note that our data have weights which correct the potential bias of the attributes of the respondents of the questionnaires based on some other referenced large data. All the results in the existing report is based on those weights. Though strictly speaking, we should also consider those weights when we aggregate samples into graphs, for the following reasons, we simple aggregation (that is, just by simply counting the number of samples in the raw data, instead of aggregating the weights attached on the raw data)</p>
+<ul>
+<li><p>Many EDVA packages including those we used in this analyses cannot deal with data with weights. Hence, it requires quite additional work.</p></li>
+<li><p>Although one way to overcome this is to resample the raw data with sampling probabilities proportional to those weights.
+However, it would fairly augment the raw data already not small (about 4,000 rows with more than 10 columns) if we try to ensure that the sampling error would be small, which is therefore not realistic.</p></li>
+<li><p>We have confirmed that there are no fatal discrepancies (that would change the conclusion) between the weighted aggregated results given in the existing report and our simply aggregated one given here.</p></li>
+</ul>
 
 </div>
             </section>
@@ -124,8 +133,8 @@
           </div>
         </div>
       </div>
-<a href="results.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="conclusion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-sources.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="missing-values.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -156,7 +165,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Francis-ZY-Yuan/EDAV-Project/edit/main/06-interactive.Rmd",
+"link": "https://github.com/Francis-ZY-Yuan/EDAV-Project/edit/main/03-cleaning.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -164,7 +173,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/Francis-ZY-Yuan/EDAV-Project/blob/main/06-interactive.Rmd",
+"link": "https://github.com/Francis-ZY-Yuan/EDAV-Project/blob/main/03-cleaning.Rmd",
 "text": null
 },
 "download": null,

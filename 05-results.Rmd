@@ -43,6 +43,22 @@ ggplot(data = findf55_Q1_to_NA) +
   theme_bw(16)+theme(axis.title.x=element_blank(),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank())+ xlab("Income categories")
+
+
+crosstable <- findf55_Q1_to_NA %>% filter(PARTY=="Repub") %>%
+  group_by(EDUCC,human) %>%
+  summarize(n()) %>% pivot_wider(names_from=human,values_from = 'n()')
+
+A <- matrix(0,nrow(crosstable),ncol(crosstable)-1)
+
+for(i in 1:nrow(crosstable)){
+  for(j in 1:(ncol(crosstable)-1)){
+    a <- as.numeric(crosstable[i,j+1])
+    if(is.na(a)){A[i,j] <- 0} else {A[i,j] <- a}
+  }
+}
+
+chisq.test(A)
 ```
 
 Here, we see the contrasting results on the both parties, which is really interesting.
