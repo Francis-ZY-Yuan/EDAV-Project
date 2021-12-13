@@ -8,7 +8,7 @@ Q1. Although the survey pointed out supported parties as a relevant factor, are 
 
 To see this, noting that the existing report suggests the strong relationship between a party one supports and his/her opinion. Hence, we should control parties, when we conduct an analysis for this question. 
 
-Hence, we drew some mosaic plots of opinion to climate change issues with faceting supported parties (democratic and republican) for several candidate of attributes.
+Hence, we drew some mosaic plots of opinion to climate change issues with faceting supported parties (Democratic and Republican) for several candidate of attributes.
 Among them, we recognized a relationship between age categories and the opposition to nuclear power uses.
 
 Here, we restricted to one of the most main topics of this survey, that is, whether human activities contribute to the climate change.
@@ -20,6 +20,7 @@ The first one is age:
 ggplot(data = findf55_Q1_to_NA) +
   geom_mosaic(aes(x = product(human, AGECA), fill = human))+
   scale_fill_manual(name="Human activities contributes to \n global climate change...",values = c("lightpink4","lightpink3","lightpink1","gray90"))+
+  ggtitle("Republicans with higher age means low contribution to climate change")+
   facet_grid(.~PARTY)+theme_bw(16)+theme(axis.title.y=element_blank())+xlab("Age categories")
 ```
 As seen from the plot above, while age is not likely to have a clear relationship for Democrats, younger Republicans are more likely to think humans are responsible for the climate change . It is of interest that what the reason is. There are several candidate factors to explain this. There are many hypotheses that tried demystifying the reason such as overlap with the serge of international discussion on climate change and their puberty, or they have high interest because they have to live longer from now. For more detail, see this (Columbia Climate School):
@@ -37,7 +38,9 @@ The next relevant attribute that we have found is income:
 ggplot(data = findf55_Q1_to_NA) +
   geom_mosaic(aes(x = product(human, INCOM), fill = human))+
   scale_fill_manual(name="Human activities contributes to \n global climate change...", values = c("lightpink4","lightpink3","lightpink1","gray90"))+
-  facet_grid(.~PARTY)+coord_flip()+theme_bw(16)+theme(axis.title.x=element_blank(),
+  facet_grid(.~PARTY)+coord_flip()+
+  ggtitle("Income has assynmetric relationship on both parties")+
+  theme_bw(16)+theme(axis.title.x=element_blank(),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank())+ xlab("Income categories")
 ```
@@ -50,7 +53,9 @@ Since income and education levels are correlated, it would not be surprising if 
 ggplot(data = findf55_Q1_to_NA) +
   geom_mosaic(aes(x = product(human, EDUCC), fill = human))+
   scale_fill_manual(name="Human activities contributes to \n global climate change...", values = c("lightpink4","lightpink3","lightpink1","gray90"))+
-  facet_grid(.~PARTY)+coord_flip()+theme_bw(16)+theme(axis.title.x=element_blank(),
+  facet_grid(.~PARTY)+coord_flip()+
+  ggtitle("Effect of education on Republicans is not clear")+
+  theme_bw(16)+theme(axis.title.x=element_blank(),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank())+ xlab("Education levels")
 ```
@@ -61,12 +66,13 @@ The last relevant factor is sex.
 ggplot(data = findf55_Q1_to_NA) +
   geom_mosaic(aes(x = product(human, SEX), fill = human))+
   scale_fill_manual(name="Human activities contributes to \n global climate change...", values = c("lightpink4","lightpink3","lightpink1","gray90"))+
-  facet_grid(.~PARTY)+theme_bw(16)+theme(axis.title.y=element_blank())+xlab("Sex")
+  facet_grid(.~PARTY)+theme_bw(16)+
+  ggtitle("Sex has also assymnetric relationship on both parties")+theme(axis.title.y=element_blank())+xlab("Sex")
 ```
 
-It is quite interesting that male are a little more likely to think that human activities have a large influence on the climate change, while opposite for Republicans. Actually, it is not consistent with the proportion of favor to coal mining (see Question 3), which may mean that male democrats are little more likely to radical to the environmental protection.
+Although the difference itself is relatively small, it is quite interesting that male are a little more likely to think that human activities contribute to the climate change, but opposite for Republicans. Actually, it is consistent with the proportion of opposition to coal mining (see Question 3), which may mean that male Democrats are little more likely to affirmative to the environmental protection.
 
-Lastly, we did not detect any relevant relationship with (1) regions, (2) whether one lives in metropolitan area or not, or (3) marital status, thereby omit the results.
+Lastly, we did not detect any relevant relationship with (1) regions, (2) whether one lives in metropolitan area or not, or (3) marital status, thereby omitted the results.
 
 ## Question 2
 
@@ -80,15 +86,19 @@ There are two types of flows of questions in the user interface of the survey. T
 However, since both ended up with similar results, we present only one as below:
 
 ```{r fig.height=5, fig.width=18}
-ggplot(data = findf_Q2_comm) +
+findf55_Q2_comm <- findf55_Q2 %>% dplyr::select(comm, PARTY, CDIVI) %>% na.omit
+
+ggplot(data = findf55_Q2_comm) +
   geom_mosaic(aes(x = product(comm, PARTY), fill = comm))+
   scale_fill_manual(name="Global climate change is \n affecting your community...", values = c("lightpink4","lightpink3","lightpink1","gray90"))+
+  ggtitle("Republicans less likely to observe climate change affecting their communities in the first place")+
   facet_grid(.~CDIVI)+theme_bw(14)+theme(axis.title.y=element_blank())+xlab("Parties")
 ```
 
+
 One can see in every region, there are large difference between the two parties of the proportion of the extent to which the climate change is affecting their communities.
 
-It implies that not only republicans are likely to attribute climate change to natural phenomenon but also they are less likely to observe climate change affecting their communities in the first place.
+It implies that not only Republicans are likely to attribute climate change to natural phenomenon but also they are less likely to observe climate change affecting their communities in the first place.
 Hence, there are composite reasons yielding the difference of attitude towards climate change between those parties.
 
 We think that the question whether climate change is affecting our communities is easier to handle than the one whether climate change is heavily due to human activities or not if any.
@@ -98,9 +108,9 @@ In this regard, lastly we want to point out that there are both types of climate
 Specifically, (1) more frequent wildfires, (2) rising sea levels, and (3) water shortages have relatively smaller differences, while (4) harm to animal wildlife and their habitats and (5) damage to forests and plant life have larger ones (probably since they are not so familiar affairs to our daily lives) as seen from the two illustrative plots below. Thus, reviewing research regarding the latter ones are considered to be of high priorities.
 
 ```{r fig.height=5, fig.width=18}
-findf_Q2_water <- findf55_Q2 %>% dplyr::select(water, PARTY, CDIVI) %>% na.omit
+findf55_Q2_water <- findf55_Q2 %>% dplyr::select(water, PARTY, CDIVI) %>% na.omit
 
-ggplot(data = findf_Q2_water) +
+ggplot(data = findf55_Q2_water) +
   geom_mosaic(aes(x = product(water, PARTY), fill = water))+
   scale_fill_manual(name="Droughts and \n water shortages \n affecting your community?", values = c("lightpink3","gray80"))+
   facet_grid(.~CDIVI)+theme_bw(14)+
@@ -108,9 +118,9 @@ ggplot(data = findf_Q2_water) +
   theme(axis.title.y=element_blank())+xlab("Parties")
 
 
-findf_Q2_animal <- findf55_Q2 %>% dplyr::select(animal, PARTY, CDIVI) %>% na.omit
+findf55_Q2_animal <- findf55_Q2 %>% dplyr::select(animal, PARTY, CDIVI) %>% na.omit
 
-ggplot(data = findf_Q2_animal) +
+ggplot(data = findf55_Q2_animal) +
   geom_mosaic(aes(x = product(animal, PARTY), fill = animal))+
   scale_fill_manual(name="Harm to animal wildlife \n and their habitats \n affecting your community?", values = c("lightpink3","gray80"))+
   facet_grid(.~CDIVI)+theme_bw(14)+
@@ -126,7 +136,7 @@ Q3. From the survey, it is seen that majority of people think that they should d
 To see this, we can calculate and compare the proportions of Yes and No for each candidate factor such as sex, age, party, income and regions. We can also conduct the chi-squared t tests to add independent analyses.
 
 Actually, we saw that supporting parties are highly related to the opposition rates. Higher for Democrats, and lower for Republicans.
-Hence, similarly to Q1, we drew some mosaic plots with faceting supported parties (democratic and republican) for several candidate of attributes.
+Hence, similarly to Q1, we drew some mosaic plots with faceting supported parties (Democratic and Republican) for several candidate of attributes.
 
 Among them, we recognized a relationship between some attributes and the opposition to nuclear power uses.
 
@@ -142,8 +152,8 @@ ggplot(data = findf55_Q3_to_NA) +
 ```
 
 
-As seen from the graph, democrats have higher average level of opposition rate to nuclear uses than republicans.
-It is interesting that while people who support democrats have similar opposition rates over all age categories, for those who support republican, younger ones have higher opposition rates. In fact, the same tendencies are observed from any other energy resources no matter they have lower opposition rate (solar power use) or higher one (coal mining) in average.
+As seen from the graph, Democrats have higher average level of opposition rate to nuclear uses than Republicans.
+It is interesting that while people who support Democrats have similar opposition rates over all age categories, for those who support Republican, younger ones have higher opposition rates. In fact, the same tendencies are observed from any other energy resources no matter they have lower opposition rate (solar power use) or higher one (coal mining) in average.
 
 This may mean that younger people are not only humans are responsible for the climate change (Question 1), but also are more likely to have interest in protection of environment. Republican party should pay attention to whether younger Republican will become more favor to nuclear uses, or their opinion will not change in the future.
 
@@ -186,3 +196,6 @@ ggplot(data = findf55_Q3_to_NA) +
   ggtitle("Sex vs coal mining for each party")+
   theme(axis.title.y=element_blank())+xlab("Sex")
 ```
+
+
+Lastly, we did not detect any relevant relationship with (1) regions, (2) whether one lives in metropolitan area or not, or (3) marital status, thereby omitted the results.
