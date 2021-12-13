@@ -1,9 +1,25 @@
 --- 
-title: "Prolitical view and their attributes"
+title: "Political views and their attributes"
 author: "Zhenyu Yuan and Yuki Ikeda"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
 
 # Introduction
+
+We want to deepen the insight given in the report by the Pew Research Center through a series of EDVA analyses:
+
+https://www.pewresearch.org/science/2019/11/25/u-s-public-views-on-climate-and-energy/
+
+1. Although the survey pointed out supported parties as a relevant factor, are educations or incomes also related to the opinion toward climate change issues (ex. whether the climate change is due to human activities or just natural patterns in global climate)? We address this issue upon trying to control other relevant effects such as supported parties.
+
+2. From the survey, it is seen that Democrats are more likely to say that the federal government is doing too little for key aspects of the environment, and Democrats are more likely to think the climate change is due to human activities. With respect to this, are Democrats (Republicans) also more (less) recognizing that the climate changes are affecting their local communities (no matter what the reason of the change is) in the first place? We address this issue upon trying to control other relevant effects such as regions.
+
+3. From the survey, it is seen that majority of people think that they should decrease the oil drilling or coal mining, and they should increase natural electricity generations such as one by wind or land heat. However, their opinion is separate with respect to whether they should increase the new clear power plants (Yes:49% vs No:49%). Here, how do factors (sex, age, party, income, regions,…) relate to the choice Yes and No.
+
+4. The survey also includes some questions about the respondents’ personality such as being organized or intellectual. How is personality affecting one’s attitude towards climate changes and willingness to take actions to reduce climate change?
+
+5. Has the public’s attitude towards climate change evolved over time? Does this change correlate with the change in election outcomes? Is it different across regions and groups?
+
+
 

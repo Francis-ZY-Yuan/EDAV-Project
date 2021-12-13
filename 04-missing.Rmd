@@ -1,17 +1,8 @@
 # Missing values
 
-```{r, include=FALSE}
-# this prevents package loading message from appearing in the rendered version of your problem set
-knitr::opts_chunk$set(warning = FALSE, message = FALSE,
-                      echo = TRUE)
-```
+In this chapter, we investigate the missing or DK(Don't know)/Refuse patterns in the following.
 
-```{r}
-library(tidyverse)
-library(patchwork)
-library(ggnewscale)
-library(foreign)
-```
+To this end, we use an originally coded plot missing function.
 
 ```{r, echo = FALSE}
 
@@ -145,26 +136,11 @@ g1 + plot_spacer() + g3 + g2 +
 
 ```
 
-```{r}
-df55 <- read.spss("./data/W55_Oct19/ATP W55.sav", to.data.frame=TRUE)
-```
+Here, as a conclusion, even though there are small number of refused answers, there are no truly NA values (here truly NA values mean that we even do not know whether the respondent refused to answer, or the respondent was eager to answer but we simply failed to record it). Hence, we drop all the refused variables hereafter.
 
-Since we have had some questions about this data as below, we are going to investigate the missing or DK(Don't know)/Refuse patterns in the following.
-Note that our data has weights which correct the potential bias of the attributes of the respondents of the questionnaires based on some other referenced large data, we may also present the weighted missing or DK/Refuse patterns by the final version.
+Nevertheless, we left the following explanation for illustrations that can be potentially applied to other EDVA analyses. Specifically, it includes the concept of MAR or MCAR which is crucial for giving unbiased estimate for a ground average based on data including missing values.
 
-**(Note!: If I have time tomorrow, I will modify the plot function to give weighted missing patterns)**
-
-Q1. Although the survey pointed out supported parties as a relevant factor, are educations or incomes also related to the opinion toward climate change issues (ex. whether the climate change is due to human activities or just natural patterns in global climate)? We address this issue upon trying to control other relevant effects such as supported parties.
-
-Q2. From the survey, it is seen that Democrats are more likely to say that the federal government is doing too little for key aspects of the environment, and Democrats are more likely to think the climate change is due to human activities. With respect to this, are Democrats (Republicans) also more (less) recognizing that the climate changes are affecting their local communities (no matter what the reason of the change is) in the first place? We address this issue upon trying to control other relevant effects such as regions.
-
-Q3. From the survey, it is seen that majority of people think that they should decrease the oil drilling or coal mining, and they should increase natural electricity generations such as one by wind or land heat. However, their opinion is separate with respect to whether they should increase the new clear power plants (Yes:49% vs No:49%). Here, how do factors (sex, age, party, income, regions,…) relate to the choice Yes and No.
-
-Q4. The survey includes some questions about the respondents’ personality. Is personality affecting one’s attitude towards climate changes and willingness to take actions to reduce climate change?
-
-Q5. Has the public’s attitude towards climate change evolved over time? Does this change correlate with the change in election outcomes? Is it different across regions and groups?
-
-## Respondents’ attributes
+## Respondents’ attributes for Questions 1-3
 
 From Q1 to Q3, we use the following variables as respondents' attributes:
 
@@ -189,15 +165,7 @@ The "DK/Refuse" patterns are as the following where the purple tiles represent t
 It is consistent with out intuition that the largest DK/Refuse patterns are for `F_INCOME` and `F_PARTYSUM_FINAL`.
 
 ```{r}
-df55_attr_to_NA <- df55 %>% 
-  dplyr::select(F_METRO,
-  F_CDIVISION,
-  F_AGECAT,
-  F_SEX,
-  F_EDUCCAT,
-  F_MARITAL,
-  F_PARTYSUM_FINAL,
-  F_INCOME) %>%
+df55 <- df55 %>%
   mutate(F_CDIVISION=gsub(F_CDIVISION,pattern="DK/Ref",replacement = NA, ignore.case = FALSE)) %>%
   mutate(F_AGECAT=gsub(F_AGECAT,pattern="DK/REF",replacement = NA, ignore.case = FALSE)) %>%
   mutate(F_SEX=gsub(F_SEX,pattern="Refused",replacement = NA, ignore.case = FALSE)) %>%
@@ -206,16 +174,61 @@ df55_attr_to_NA <- df55 %>%
   mutate(F_PARTYSUM_FINAL=gsub(F_PARTYSUM_FINAL,pattern="DK/Refused/No lean",replacement = NA, ignore.case = FALSE)) %>%
   mutate(F_INCOME=gsub(F_INCOME,pattern="Refused",replacement = NA, ignore.case = FALSE))
 
-colnames(df55_attr_to_NA)
+df55_attr_to_NA <- df55 %>% 
+  dplyr::select(F_METRO,
+  F_CDIVISION,
+  F_AGECAT,
+  F_SEX,
+  F_EDUCCAT,
+  F_MARITAL,
+  F_PARTYSUM_FINAL,
+  F_INCOME)
+
 names(df55_attr_to_NA) <- substring(names(df55_attr_to_NA), 3)
 names(df55_attr_to_NA) <- substring(names(df55_attr_to_NA), 1,5)
 df55_attr_to_NA %>% plot_missing(percent= TRUE)
+
+df55_attr_to_NA <- df55_attr_to_NA %>% mutate(CDIVI = fct_relevel(CDIVI,
+                                   "Pacific",
+                                   "Mountain",
+                                   "West North Central",
+                                   "West South Central",
+                                   "East North Central",
+                                   "East South Central",
+                                   "New England",
+                                   "Mid-Atlantic",
+                                   "South Atlantic")) %>%
+  mutate(EDUCC = fct_relevel(EDUCC,
+                                   "H.S. graduate or less",
+                                   "Some College", 
+                                   "College graduate+")) %>%
+  mutate(INCOM = fct_relevel(INCOM,
+                                   "Less than $10,000",
+                                   "$10,000 to less than $20,000", 
+                                   "$20,000 to less than $30,000", 
+                                   "$30,000 to less than $40,000", 
+                                   "$40,000 to less than $50,000",
+                                   "$50,000 to less than $75,000",
+                                   "$75,000 to less than $100,000",
+                                   "$100,000 to less than $150,000",
+                                   "$150,000 or more")) %>%
+  mutate(PARTY = fct_recode(PARTY, Demo = "Dem/Lean Dem", Repub = "Rep/Lean Rep")) %>%
+  mutate(INCOM = fct_recode(INCOM, 
+                                   "< $10K" = "Less than $10,000",
+                                   "$10K-20K" = "$10,000 to less than $20,000", 
+                                   "$20K-30K" = "$20,000 to less than $30,000", 
+                                   "$30K-40K" = "$30,000 to less than $40,000", 
+                                   "$40K-50K" = "$40,000 to less than $50,000",
+                                   "$50K-75K" = "$50,000 to less than $75,000",
+                                   "$75K-100K" = "$75,000 to less than $100,000",
+                                   "$100K-150K" = "$100,000 to less than $150,000",
+                                   ">= $150K" = "$150,000 or more"))
 ```
 
 Note that there are no large refused patterns which might affect our analyses in any variables.
 If these DK/Refuse patterns were large, we would have to check whether the answers for questionnaires of interest are not severely unbiased for the DK/Refuse patterns.
 
-## Q1. Opinion toward climate change factor and their attributes
+## Question 1
 
 For Q1, we use the the questions below:
 
@@ -247,7 +260,27 @@ df55_Q1_to_NA %>% plot_missing()
 Like the one for respondents' attributes, there are no large refusal patterns.
 Also, there are no prominent refusal correlations that we should pay attention to, since the largest refusal patterns have only one refused item.
 
-## Q2. Opinion toward climate change impact and their attributes
+Hence, we drop all the refused variables (now having been replaced into "NA") hereafter.
+
+```{r }
+df55_Q1_to_NA <- df55_Q1_to_NA %>%
+  mutate(human = fct_relevel(human,
+                                   "A great deal",
+                                   "Some",
+                                   "Not too much",
+                                   "Not at all")) %>%
+  mutate(natural = fct_relevel(natural,
+                                   "A great deal",
+                                   "Some",
+                                   "Not too much",
+                                   "Not at all"))
+
+findf55_Q1_to_NA <- df55_Q1_to_NA %>% na.omit
+```
+
+
+
+## Question 2
 
 For CLIM9F1 (for Form 1) and F2 (for Form 2), the questions are as below:
 
@@ -279,6 +312,8 @@ Questions from CLIM10_a_W55 to CLIM10_g_W55 are asked for respondents who answer
 
 One can see from below that in Form 1, CLIM9F1_a_W55, CLIM9F1_b_W55 are not missing,
 Likewise, CLIM9F2_W55 is not missing for Form 2.
+
+
 
 ```{r}
 df55_Q2_to_NA <- df55 %>% 
@@ -328,7 +363,7 @@ In the case of (1), it is known that the relationship of explanatory variables a
 
 In the case of (2), the missing values are no longer missing (they are "2 No").
 
-Therefore, it suffices to simply compute the proportion of "1 Yes, a major way" to all non-missing values and analyse the difference in the proportions between supporting parties to answer Q3.
+Therefore, it suffices to simply compute the proportion of "1 Yes, a major way" to all non-missing values and analyse the difference in the proportions between supporting parties to answer Q2.
 
 ```{r}
 df55_Q2_to_REF <- as.matrix(df55_Q2_to_NA)
@@ -348,12 +383,65 @@ df55_Q2_to_REF <- df55_Q2_to_REF %>%
   gsub(pattern = "Refused", replacement = NA, ignore.case = FALSE) %>%
   as.data.frame()
 
+
+
 df55_Q2_to_REF %>% plot_missing(percent= TRUE)
 df55_Q2_to_REF %>% plot_missing()
 ```
 
+We therefore will drop all refused variables henceforth with some factor relabeling.
 
-## Q3. Opinion toward nuclear power and their attributes
+```{r}
+subdf55_Q2 <- as.matrix(df55_Q2_to_NA)
+
+subdf55_Q2 <- subdf55_Q2 %>%
+  gsub(pattern = "Refused", replacement = NA, ignore.case = FALSE) %>%
+  as.data.frame()
+
+subdf55_Q2 <- subdf55_Q2 %>%
+  mutate(usa = fct_relevel(usa,
+                                   "A great deal",
+                                   "Some",
+                                   "Not too much",
+                                   "Not at all")) %>%
+  mutate(comm = fct_relevel(comm,
+                                   "A great deal",
+                                   "Some",
+                                   "Not too much",
+                                   "Not at all")) %>%
+  mutate(comm2 = fct_relevel(comm2,
+                                   "A great deal",
+                                   "Some",
+                                   "Not too much",
+                                   "Not at all")) %>%
+  mutate(water = fct_relevel(water,
+                                   "Yes, a major way",
+                                   "No, not a major way")) %>%
+  mutate(hot = fct_relevel(hot,
+                                   "Yes, a major way",
+                                   "No, not a major way")) %>%
+  mutate(severe = fct_relevel(severe,
+                                   "Yes, a major way",
+                                   "No, not a major way")) %>%  
+  mutate(sea = fct_relevel(sea,
+                                   "Yes, a major way",
+                                   "No, not a major way")) %>%  
+  mutate(forest = fct_relevel(forest,
+                                   "Yes, a major way",
+                                   "No, not a major way")) %>%    
+  mutate(animal = fct_relevel(animal,
+                                   "Yes, a major way",
+                                   "No, not a major way")) %>%    
+  mutate(wildfire = fct_relevel(wildfire,
+                                   "Yes, a major way",
+                                   "No, not a major way"))
+
+findf55_Q2 <- cbind(subdf55_Q2,df55_attr_to_NA)
+```
+
+
+
+## Question 3
 
 For Q3, we use the questions below about agreeing or disagreeing with more nuclear power plants to generate electricity.
 
@@ -405,3 +493,28 @@ Although it is of interest to investigate whether these refusal patterns are cor
 
 Also, there are no prominent refusal correlations that we should pay attention to, since the largest refusal patterns have only one refused item.
 
+Hence, we drop all the refused variables (now having been replaced into "NA") hereafter.
+
+```{r }
+df55_Q3_to_NA <- df55_Q3_to_NA %>%
+  mutate(oilgas = fct_relevel(oilgas,
+                                   "Oppose",
+                                   "Favor")) %>%
+  mutate(nuclear = fct_relevel(nuclear,
+                                   "Oppose",
+                                   "Favor")) %>%
+  mutate(coal = fct_relevel(coal,
+                                   "Oppose",
+                                   "Favor")) %>%
+   mutate(solar = fct_relevel(solar,
+                                   "Oppose",
+                                   "Favor")) %>%
+   mutate(fracking = fct_relevel(fracking,
+                                   "Oppose",
+                                   "Favor")) %>%
+   mutate(wind = fct_relevel(wind,
+                                   "Oppose",
+                                   "Favor"))
+  
+findf55_Q3_to_NA <- df55_Q3_to_NA %>% na.omit
+```
