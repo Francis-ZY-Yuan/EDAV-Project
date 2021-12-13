@@ -1,1 +1,20 @@
 # Data transformation
+
+In this chapter, we briefly explain the data transformation process for exploratory analyses with R.
+
+Since, the data is already well-formatted as .sav files, we only imported them into dataframes and only rendered some factor re-labeings or re-namings after analyzing the missing value patterns.
+
+```{r}
+df55 <- foreign::read.spss("./data/W55_Oct19/ATP W55.sav", to.data.frame=TRUE)
+```
+
+Note that our data have weights which correct the potential bias of the attributes of the respondents of the questionnaires based on some other referenced large data. All the results in the existing report is based on those weights. Though strictly speaking, we should also consider those weights when we aggregate samples into graphs, for the following reasons, we simple aggregation (that is, just by simply counting the number of samples in the raw data, instead of aggregating the weights attached on the raw data)
+
+  - Many EDVA packages including those we used in this analyses cannot deal with data with weights. Hence, it requires quite additional work.
+  
+  - Although one way to overcome this is to resample the raw data with sampling probabilities proportional to those weights.
+  However, it would fairly augment the raw data already not small (about 4,000 rows with more than 10 columns) if we try to ensure that the sampling error would be small, which is therefore not realistic.
+  
+  - We have confirmed that there are no fatal discrepancies (that would change the conclusion) between the weighted aggregated results given in the existing report and our simply aggregated one given here.
+
+
