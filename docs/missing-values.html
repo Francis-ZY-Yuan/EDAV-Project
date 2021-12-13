@@ -137,7 +137,7 @@
 <p>Actually, there are no missing values other than “DK/Refuse” in these attributes.
 The “DK/Refuse” patterns are as the following where the purple tiles represent them.
 It is consistent with out intuition that the largest DK/Refuse patterns are for <code>F_INCOME</code> and <code>F_PARTYSUM_FINAL</code>.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Note that there are no large refused patterns which might affect our analyses in any variables.
 If these DK/Refuse patterns were large, we would have to check whether the answers for questionnaires of interest are not severely unbiased for the DK/Refuse patterns.</p>
 </div>
@@ -149,7 +149,7 @@ If these DK/Refuse patterns were large, we would have to check whether the answe
 <p>Similarly to the attribute information, there are no missing values but there are “refuse” answers.
 The refusal patterns for these questions are presented below.
 Note that the explanatory variable are written in uppercase letter, while the explained ones in lowercase.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-10-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
 <p>Like the one for respondents’ attributes, there are no large refusal patterns.
 Also, there are no prominent refusal correlations that we should pay attention to, since the largest refusal patterns have only one refused item.</p>
 <p>Hence, we drop all the refused variables (now having been replaced into “NA”) hereafter.</p>
@@ -180,7 +180,7 @@ Also, there are no prominent refusal correlations that we should pay attention t
 </ul>
 <p>One can see from below that in Form 1, CLIM9F1_a_W55, CLIM9F1_b_W55 are not missing,
 Likewise, CLIM9F2_W55 is not missing for Form 2.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>Also, it is confirmed from below that the questions CLIM10_X_W55 for X=a,…,g are missing only if CLIM9F1_b_W55 or CLIM9F2_W55 is answered by 3 Not too much, 4 Not at all, or “Refused.”
 Therefore, the only essential missing values of CLIM10_X_W55 is the one when <code>comm</code> or <code>comm2</code> is “Refused” or when they are “Refused” by themselves.</p>
 <pre><code>## # A tibble: 6 x 4
@@ -212,7 +212,7 @@ It is suspected that the reason for this is that answering them was felt like ti
 <p>In the case of (1), it is known that the relationship of explanatory variables and explained one (more precisely, the least squared estimator of the slope for a true linear model) can be inferred unbiasedly. Similar argument holds at least qualitatively for discrete explanatory variables.</p>
 <p>In the case of (2), the missing values are no longer missing (they are “2 No”).</p>
 <p>Therefore, it suffices to simply compute the proportion of “1 Yes, a major way” to all non-missing values and analyse the difference in the proportions between supporting parties to answer Q2.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-13-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-14-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
 <p>We therefore will drop all refused variables henceforth with some factor relabeling.</p>
 </div>
 <div id="question-3" class="section level2" number="4.4">
@@ -228,7 +228,7 @@ It is suspected that the reason for this is that answering them was felt like ti
 </ul>
 <p>Similarly to the attribute information, there are no missing values but there are “refuse” answers. Those refusal patterns are presented below for questions including others such as more coal mining or more natural energy.
 Note that the explanatory variable are written in uppercase letter, while the explained ones in lowercase.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-15-1.png" width="960" /><img src="finalproj_files/figure-html/unnamed-chunk-15-2.png" width="960" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-16-1.png" width="960" /><img src="finalproj_files/figure-html/unnamed-chunk-16-2.png" width="960" /></p>
 <p>Like the one for respondents’ attributes, there are no large refusal patterns.
 It is interesting that the most major refusal pattern is not the one in which all of them are refused, but only one of them is refused.
 Combining with the fact that the user interface of these questions in the questionnaire displays only “favor” or “oppose” options, it implies that the “refusal” means “Do not have opinion” rather than “Do not want to answer” or “refuse to answer (due to some personal reason).”

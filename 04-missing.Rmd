@@ -1,5 +1,15 @@
 # Missing values
 
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(patchwork)
+library(ggnewscale)
+library(foreign)
+library(vcd)
+library(ggmosaic)
+```
+
 In this chapter, we investigate the missing or DK(Don't know)/Refuse patterns in the following.
 
 To this end, we use an originally coded plot missing function.
