@@ -1,0 +1,262 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.13.0
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+---
+
+```{r}
+library(tigris)
+library(tidyverse)
+library(foreign)
+library(ggalluvial)
+library(dummies)
+library(openxlsx)
+library(sf)
+```
+
+```{r}
+W33 = read.xlsx("../data/W33_Mar18/ATP W33 Weighted Resample.xlsx") %>% tibble()
+W67 = read.xlsx("../data/W67_May20/ATP W67 Weighted Resample.xlsx") %>% tibble()
+```
+
+# Elections and opinion on climate change 
+
+People's views on climate change and environmental problems differ by the party the support. For example, supporters of the GOP tend to think that policies aimed at reducing the effect of climate change will hurt the economy, while the Democrats tend to think they have benefits.
+
+```{r}
+W33 %>%
+    filter(CLIM5_W33!="Refused" & F_PARTY_FINAL!="Refused") %>%
+    mutate(CLIM5_W33 = factor(CLIM5_W33, levels=c('Help the U.S. economy',
+                                                  'Make no difference for the U.S. economy',
+                                                  'Hurt the U.S. economy'))) %>%
+    mutate(CLIM5_W33=recode_factor(CLIM5_W33, `Help the U.S. economy`="Positive",
+                                   `Make no difference for the U.S. economy`="Neutral",
+                                    `Hurt the U.S. economy`="Negative")) %>%
+    mutate(F_PARTY_FINAL=recode_factor(F_PARTY_FINAL, `Something else`="Else")) %>%
+    ggplot(aes(y=1, axis1=CLIM5_W33, axis2=F_PARTY_FINAL, fill=F_PARTY_FINAL)) +
+        geom_flow() +
+        geom_stratum() + 
+        geom_text(stat = "stratum", infer.label = TRUE) +
+        scale_fill_manual(values=c("Democrat"="royalblue2", "Republican"="Red",
+                                  "Independent"="yellow", "Something else"="grey")) +
+        scale_x_discrete(limits=c("Perception of climate adaptation\n policies' effect on economy",
+                                  "Political stance")) + ylab("") +
+        coord_flip() + theme(legend.position="none")
+```
+
+Similar trends appear in other climate and environment related issues.
+
+These association are on the individual level. If we aggregate them, we might be able to see a correlation with elections outcomes.
+
+We have Pew's survey data about environment and climate change in 2018 and 2020, which are both election years (and the surveys are prior to elections). We used the House election data instead of Senate because all House seats but only one third of Senate seats are open for election every two years, which means there's extra sources of variation for Senate elections. We didn't use Presidential election because we don't have survey data in 2016.
+
+Unfortunately, the survey data only allows for aggregation by census region (South, West, Northeast, and Midwest, each consisting of around 10 states). This means we will only have 4 data points for a year, which precludes regression and statistical tests. Nevertheless, the difference across the regions and the trends are very obvious.
+
+```{r}
+W67_env_dummies = dummy.data.frame(W67 %>% select(c(F_CREGION, ENVIR8_a_W67,ENVIR8_b_W67,ENVIR8_c_W67,
+                                  ENVIR8_d_W67, ENVIR8_e_W67)) %>% as.data.frame(),
+                 names=c('ENVIR8_a_W67','ENVIR8_b_W67','ENVIR8_c_W67','ENVIR8_d_W67','ENVIR8_e_W67'),
+                 sep=":") %>%
+    tibble() 
+
+W67_ENVIR8_TOO_LITTLE =
+W67_env_dummies  %>%
+    group_by(F_CREGION) %>%
+    summarise_all(mean) %>%
+    inner_join(W67_env_dummies  %>%
+                    group_by(F_CREGION) %>%
+                    summarise(N=n()),
+              by="F_CREGION") %>%
+    select(ends_with("Too little") | starts_with("F_") | starts_with("N"))
+
+colnames(W67_ENVIR8_TOO_LITTLE) <- colnames(W67_ENVIR8_TOO_LITTLE) %>%
+                                    str_replace("ENVIR8_(.)_W67:Too little", "\\1") %>%
+                                    str_to_lower()
+```
+
+```{r}
+W33_env_dummies = dummy.data.frame(W33 %>% select(c(F_CREGION_FINAL, ENVIR8A_W33, ENVIR8B_W33,
+                                                    ENVIR8C_W33, ENVIR8D_W33, ENVIR8E_W33)) %>% as.data.frame(),
+                 names=c('ENVIR8A_W33','ENVIR8B_W33','ENVIR8C_W33','ENVIR8D_W33','ENVIR8E_W33'),
+                 sep=":") %>%
+    tibble() 
+
+W33_ENVIR8_TOO_LITTLE =
+W33_env_dummies  %>%
+    group_by(F_CREGION_FINAL) %>%
+    summarise_all(mean) %>%
+    inner_join(W33_env_dummies  %>%
+                    group_by(F_CREGION_FINAL) %>%
+                    summarise(N=n()),
+              by="F_CREGION_FINAL") %>%
+    select(ends_with("Too little") | starts_with("F_") | starts_with("N")) %>%
+    rename(F_CREGION = F_CREGION_FINAL)
+
+colnames(W33_ENVIR8_TOO_LITTLE) <- colnames(W33_ENVIR8_TOO_LITTLE) %>%
+                                    str_replace("ENVIR8(.)_W33:Too little", "\\1") %>%
+                                    str_to_lower()
+```
+
+```{r}
+envir8_2018_2020 =
+bind_rows(
+    W33_ENVIR8_TOO_LITTLE %>% 
+        mutate(year=2018) %>%
+        pivot_longer(cols = !f_cregion & !year, names_to = "Question", values_to = "too little"),
+    W67_ENVIR8_TOO_LITTLE %>% 
+        mutate(year=2020) %>%
+        pivot_longer(cols = !f_cregion & !year, names_to = "Question", values_to = "too little")
+) %>% filter(Question!="n") %>% mutate(year=as.factor(year))
+
+```
+
+```{r}
+#A nuianse here is that in Minnesota the Democratic party goes by Democratic-Farmer-Labor,
+# and in North Dakota Democratic_NPL. We need to manually handle those two.
+
+# Also, in DC, there's no Republican candidate for Representatives,
+#so we need to specify values_fill=0 to avoid producing an NA which will ruin the sum function used later.
+
+House_elec = read.csv("../data/Election_data/1976-2020-house.csv")
+House_2018_2020 = House_elec %>%
+    tibble() %>%
+    filter(year %in% c(2018,2020)) %>%
+    mutate(party = plyr::mapvalues(party,
+                             c("DEMOCRATIC-FARMER-LABOR", "DEMOCRATIC-NPL", "DEMOCRATIC-NONPARTISAN LEAGUE",
+                               "DEMOCRAT", "REPUBLICAN"),
+                             c("Dem", "Dem", "Dem", "Dem", "Rep"))) %>%
+    filter(party %in% c("Dem", "Rep")) %>%
+    group_by(year, party, state_po) %>%
+    summarise(votes=sum(candidatevotes)) %>%
+    ungroup() %>%
+    pivot_wider(names_from = "party", values_from = "votes", values_fill = 0) 
+```
+
+```{r}
+ELEC_2018 = House_2018_2020 %>% filter(year==2018)
+```
+
+```{r}
+ELEC_2018_REGION = inner_join(ELEC_2018, st_drop_geometry(states()), by=c("state_po"="STUSPS")) %>%
+    group_by(REGION) %>%
+    summarise(DEM=sum(Dem), REP=sum(Rep)) %>%
+    mutate(pct_dem=DEM/(DEM+REP))
+```
+
+The four census regions are shown below.
+
+```{r}
+regions() %>% 
+    ggplot(aes(geometry=geometry, fill=NAME)) +
+        geom_sf() + 
+        scale_fill_discrete(name="Census region") +
+        xlim(c(-125,-65)) +
+        ylim(c(20,50))
+```
+
+In both 2018 and 2020, we can see that if people think the government isn't doing enough on climate and environment issues, they tend to support the Democratic party. Exceptions are animal and water protection. It seems the two are not so important.
+
+Note that the support for Democrats are calculated as the ratio of people who voted for a Democratic candidate in the census region. It's not the average of average in each state.
+
+```{r}
+ELEC_2020 = House_2018_2020 %>% filter(year==2020)
+ELEC_2020_REGION = inner_join(ELEC_2020, st_drop_geometry(states()), by=c("state_po"="STUSPS")) %>%
+    group_by(REGION) %>%
+    summarise(DEM=sum(Dem), REP=sum(Rep)) %>%
+    mutate(pct_dem=DEM/(DEM+REP))
+```
+
+```{r}
+ENVIR8_question = list("a"="Protect air quality",
+                       "b"="Protect water quality",
+                       "c"="Protect animals",
+                       "d"="Protect land",
+                       "e"="Deal with climate change"
+                      )
+
+```
+
+```{r}
+inner_join(ELEC_2018_REGION,
+        inner_join(W33_ENVIR8_TOO_LITTLE, st_drop_geometry(regions()),
+           by=c("f_cregion"="NAME")),
+        by=c("REGION"="REGIONCE")) %>% 
+    pivot_longer(cols = c(a,b,c,d,e), names_to = "Question", values_to = "too little") %>%
+    mutate(Question=sapply(Question,
+                           function(i){return(ENVIR8_question[[i]])})) %>%
+    ggplot(aes(x=pct_dem, y=`too little`)) +
+        geom_point(aes(shape=f_cregion)) +
+        stat_smooth(method="lm", se=F) +
+        facet_wrap(~Question) +
+        scale_y_continuous(labels = scales::percent_format(scale=100, accuracy=1)) +
+        scale_x_continuous(labels = scales::percent_format(scale=100, accuracy=1)) +
+        xlab("") + ylab("") +scale_shape_discrete(name="Census region") +
+        ggtitle("Support for Democrats in 2018 House elections (horiz.) vs \nPercentage who thinks the federal governmentis doing too little to...")
+```
+
+```{r}
+inner_join(ELEC_2020_REGION,
+        inner_join(W67_ENVIR8_TOO_LITTLE, st_drop_geometry(regions()),
+           by=c("f_cregion"="NAME")),
+        by=c("REGION"="REGIONCE")) %>% 
+    pivot_longer(cols = c(a,b,c,d,e), names_to = "Question", values_to = "too little") %>%
+    mutate(Question=sapply(Question,
+                           function(i){return(ENVIR8_question[[i]])})) %>%
+    ggplot(aes(x=pct_dem, y=`too little`)) +
+        geom_point(aes(shape=f_cregion)) +
+        geom_smooth(method="lm", se=F) +
+        facet_wrap(~Question) +
+        scale_y_continuous(labels = scales::percent_format(scale=100, accuracy=1)) +
+        scale_x_continuous(labels = scales::percent_format(scale=100, accuracy=1)) +
+        scale_shape_discrete(name="Census region") +
+        xlab("") + ylab("") + 
+        ggtitle("Support for Democrats in 2020 House elections (horiz.) vs \nPercentage who thinks the federal governmentis doing too little to...")
+```
+
+However, when we take the difference in the two years. It's a different story. The trend has reversed. If more people fell the government is not doing enough on the issues, more people are voting for the GOP.
+
+What's happening here? We should take note that from 2016 to 2018, the Republicans had majority in the House, while the Democrats took over the majority in 2018. Before elections, people are likely to blame the incumbent for not taking enough action.
+
+```{r}
+cregion_code = c("Midwest"='2', "Northeast"='1',"South"='3',"West"='4')
+diff_envir8 = inner_join(W33_ENVIR8_TOO_LITTLE, W67_ENVIR8_TOO_LITTLE,
+                   by="f_cregion", suffix=c("2018", "2020")) %>%
+            mutate(diff_a=a2018-a2020,
+                diff_b=b2018-b2020,
+                diff_c=c2018-c2020,
+                diff_d=d2018-d2020,
+                diff_e=e2018-e2020) %>%
+            mutate(REGION=sapply(f_cregion, function(x){return(cregion_code[[x]])}))
+
+
+diff_elec = inner_join(ELEC_2018_REGION, ELEC_2020_REGION, by="REGION", suffix=c("2018", "2020")) %>%
+            mutate(diff_dem_pct=pct_dem2018-pct_dem2020)
+
+inner_join(diff_envir8, diff_elec,
+        by="REGION") %>%
+    select(starts_with("diff") | f_cregion) %>%
+    pivot_longer(!c(diff_dem_pct, f_cregion), names_to = "Question") %>%
+    mutate(Question=sapply(Question,
+                           function(i){return(ENVIR8_question[[str_sub(i,-1,-1)]])})) %>%
+    ggplot(aes(x=diff_dem_pct, y=value)) +
+        geom_point(aes(shape=f_cregion)) +
+        geom_smooth(method = "lm", se=F) +
+        facet_wrap(~Question) + scale_shape_discrete(name="Census region") + xlab("") + ylab("") + 
+        scale_y_continuous(labels = scales::percent_format(scale=100)) +
+        scale_x_continuous(labels = scales::percent_format(scale=100), n.breaks = 2) +
+        ggtitle("Change in support for Democrats in House elections (horiz.) vs \nChange in percentage who thinks the federal governmentis doing too little to...")
+
+```
+
+```{r}
+
+```
