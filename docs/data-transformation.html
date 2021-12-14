@@ -93,6 +93,8 @@
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#question-1-1"><i class="fa fa-check"></i><b>5.1</b> Question 1</a></li>
 <li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#question-2-1"><i class="fa fa-check"></i><b>5.2</b> Question 2</a></li>
 <li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#question-3-1"><i class="fa fa-check"></i><b>5.3</b> Question 3</a></li>
+<li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#question-4"><i class="fa fa-check"></i><b>5.4</b> Question 4</a></li>
+<li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#question-5"><i class="fa fa-check"></i><b>5.5</b> Question 5</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
@@ -119,11 +121,12 @@
 <h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
 <p>In this chapter, we briefly explain the data transformation process for exploratory analyses with R.</p>
 <p>Since, the data is already well-formatted as .sav files, we only imported them into dataframes and only rendered some factor re-labeings or re-namings after analyzing the missing value patterns.</p>
-<p>Note that our data have weights which correct the potential bias of the attributes of the respondents of the questionnaires based on some other referenced large data. All the results in the existing report is based on those weights. Though strictly speaking, we should also consider those weights when we aggregate samples into graphs, for the following reasons, we simple aggregation (that is, just by simply counting the number of samples in the raw data, instead of aggregating the weights attached on the raw data)</p>
+<p>Note that our data have weights which correct the potential bias of the attributes of the respondents of the questionnaires based on some other referenced large data. All the results in the existing report is based on those weights. Therefore, we should also consider those weights when we aggregate samples into graphs. However, for the following reasons, we employ simple aggregation for Question 1-3 (that is, just by simply counting the number of samples in the raw data, instead of aggregating the weights attached on the raw data).
+Question 4-5 are based on the resampling method written below.</p>
 <ul>
 <li><p>Many EDVA packages including those we used in this analyses cannot deal with data with weights. Hence, it requires quite additional work.</p></li>
 <li><p>Although one way to overcome this is to resample the raw data with sampling probabilities proportional to those weights.
-However, it would fairly augment the raw data already not small (about 4,000 rows with more than 10 columns) if we try to ensure that the sampling error would be small, which is therefore not realistic.</p></li>
+However, it would fairly augment the raw data already not small (about from 4,000 to 10,000 rows with tens of columns for each dataset) if we try to ensure that the sampling error would be minimized, which was difficult for one of us due to the limited performance of his PC.</p></li>
 <li><p>We have confirmed that there are no fatal discrepancies (that would change the conclusion) between the weighted aggregated results given in the existing report and our simply aggregated one given here.</p></li>
 </ul>
 

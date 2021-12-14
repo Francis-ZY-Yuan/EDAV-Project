@@ -93,6 +93,8 @@
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#question-1-1"><i class="fa fa-check"></i><b>5.1</b> Question 1</a></li>
 <li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#question-2-1"><i class="fa fa-check"></i><b>5.2</b> Question 2</a></li>
 <li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#question-3-1"><i class="fa fa-check"></i><b>5.3</b> Question 3</a></li>
+<li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#question-4"><i class="fa fa-check"></i><b>5.4</b> Question 4</a></li>
+<li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#question-5"><i class="fa fa-check"></i><b>5.5</b> Question 5</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
@@ -117,6 +119,10 @@
             <section class="normal" id="section-">
 <div id="results" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Results</h1>
+<ul>
+<li><p>Please note that here we simply refer to those who support the Republican party by simply “Republicans” and the Democratic Party by “Democrats.”</p></li>
+<li><p>We tried the chi-squared independence test for every result given here. Unless otherwise stated, a visible relationship in a mosaic plot surely meant a rejection of the null hypotheses of independence at least in this analysis. On the other hand, not clear relationship in a mosaic plot sometimes also led a rejection in this analysis.</p></li>
+</ul>
 <div id="question-1-1" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Question 1</h2>
 <p>We first explore the answer to the following question:</p>
@@ -127,26 +133,42 @@ Among them, we recognized a relationship between age categories and the oppositi
 <p>Here, we restricted to one of the most main topics of this survey, that is, whether human activities contribute to the climate change.
 As a result, we recognized some attributes relating to the opinion.</p>
 <p>The first one is age:</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-19-1.png" width="960" />
-As seen from the plot above, while age is not likely to have a clear relationship for Democrats, younger Republicans are more likely to think humans are responsible for the climate change . It is of interest that what the reason is. There are several candidate factors to explain this. There are many hypotheses that tried demystifying the reason such as overlap with the serge of international discussion on climate change and their puberty, or they have high interest because they have to live longer from now. For more detail, see this (Columbia Climate School):</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-19-1.png" width="960" /></p>
+<p>As seen from the plot above, while age is not likely to have a clear relationship for Democrats, younger Republicans are more likely to think humans are responsible for the climate change . It is of interest that what the reason is. There are several candidate factors to explain this. There are many hypotheses that tried demystifying the reason such as overlap with the serge of international discussion on climate change and their puberty, or they have high interest because they have to live longer from now. For more detail, see this (Columbia Climate School):</p>
 <p><a href="https://news.climate.columbia.edu/2019/02/04/age-gap-environmental-politics/" class="uri">https://news.climate.columbia.edu/2019/02/04/age-gap-environmental-politics/</a></p>
 <p>Actually, this result is quite consistent with the results written in the URL above.</p>
 <p>Another finding is that most of people (almost 80-90%) think human activities more or less contribute to the global climate change.
 The difference is on the degree of impacts.</p>
 <p>The next relevant attribute that we have found is income:</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
+<p>Here, we see the contrasting results for the both parties, which is really interesting.
+Democrats with higher or middle income are more likely to think human activities contribute to more, while Republicans with higher or middle income are less likely to do.
+Since income and education levels are correlated, it would not be surprising if we had such an opposite tendencies on the education level, too. However, since the tendency is not so clear for Republicans on education (see the chi-squared independence tests below), we suspect that there may be some unique reason for the relationship with income, and it is not just that education is a confounding factor. Therefore, it is worth investigating more.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-21-1.png" width="960" /></p>
+<ul>
+<li>chi-squared independence test for income levels and the degree human activities contribute to for only Republicans: we reject the null hypothesis that both are independent.</li>
+</ul>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  A
+## X-squared = 38.882, df = 24, p-value = 0.0281</code></pre>
+<ul>
+<li>chi-squared independence test for education levels and the degree human activities contribute to for only Republicans: we cannot reject the null hypothesis that both are independent.</li>
+</ul>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
 ## 
 ## data:  A
 ## X-squared = 7.1966, df = 6, p-value = 0.3031</code></pre>
-<p>Here, we see the contrasting results on the both parties, which is really interesting.
-Democrats with higher or middle income are more likely to think human activities contribute to more, while Republicans with higher or middle income are less likely to do.
-Since income and education levels are correlated, it would not be surprising if we had such an opposite tendencies on the education level. However, since the tendency is not so clear for Republicans on education (see below), we suspect that there may be some more reason of this result in addition to that it is just that education is a confounding factor.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-21-1.png" width="960" /></p>
-<p>The last relevant factor is sex.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-22-1.png" width="768" /></p>
+<p>The last relevant factor is sex:</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-25-1.png" width="768" /></p>
 <p>Although the difference itself is relatively small, it is quite interesting that male are a little more likely to think that human activities contribute to the climate change, but opposite for Republicans. Actually, it is consistent with the proportion of opposition to coal mining (see Question 3), which may mean that male Democrats are little more likely to affirmative to the environmental protection.</p>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  A
+## X-squared = 20.829, df = 3, p-value = 0.0001143</code></pre>
 <p>Lastly, we did not detect any relevant relationship with (1) regions, (2) whether one lives in metropolitan area or not, or (3) marital status, thereby omitted the results.</p>
 </div>
 <div id="question-2-1" class="section level2" number="5.2">
@@ -156,7 +178,7 @@ Since income and education levels are correlated, it would not be surprising if 
 <p>Hence, we drew again some mosaic plots representing the proportions of recognizing that the climate change is affecting their local communities.</p>
 <p>There are two types of flows of questions in the user interface of the survey. Thus, there are two types of variables that represent the proportions.
 However, since both ended up with similar results, we present only one as below:</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-23-1.png" width="1728" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-27-1.png" width="1728" /></p>
 <p>One can see in every region, there are large difference between the two parties of the proportion of the extent to which the climate change is affecting their communities.</p>
 <p>It implies that not only Republicans are likely to attribute climate change to natural phenomenon but also they are less likely to observe climate change affecting their communities in the first place.
 Hence, there are composite reasons yielding the difference of attitude towards climate change between those parties.</p>
@@ -164,7 +186,7 @@ Hence, there are composite reasons yielding the difference of attitude towards c
 Therefore, this result tells us that we should first review research regarding the existence of impact of climate change on our communities, and if any, that would be the start point to discuss the impact of human activities on climate change. This is where Data Science comes in since it essentially requires statistical points of view.</p>
 <p>In this regard, lastly we want to point out that there are both types of climate change that have relatively small or large differences in proportions between the two parties.
 Specifically, (1) more frequent wildfires, (2) rising sea levels, and (3) water shortages have relatively smaller differences, while (4) harm to animal wildlife and their habitats and (5) damage to forests and plant life have larger ones (probably since they are not so familiar affairs to our daily lives) as seen from the two illustrative plots below. Thus, reviewing research regarding the latter ones are considered to be of high priorities.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-24-1.png" width="1728" /><img src="finalproj_files/figure-html/unnamed-chunk-24-2.png" width="1728" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="1728" /><img src="finalproj_files/figure-html/unnamed-chunk-28-2.png" width="1728" /></p>
 </div>
 <div id="question-3-1" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Question 3</h2>
@@ -173,22 +195,73 @@ Specifically, (1) more frequent wildfires, (2) rising sea levels, and (3) water 
 <p>Actually, we saw that supporting parties are highly related to the opposition rates. Higher for Democrats, and lower for Republicans.
 Hence, similarly to Q1, we drew some mosaic plots with faceting supported parties (Democratic and Republican) for several candidate of attributes.</p>
 <p>Among them, we recognized a relationship between some attributes and the opposition to nuclear power uses.</p>
-<p>First one is age categories similarly to Question 1.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-25-1.png" width="960" /></p>
+<p>The first one is age categories similarly to Question 1.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
 <p>As seen from the graph, Democrats have higher average level of opposition rate to nuclear uses than Republicans.
 It is interesting that while people who support Democrats have similar opposition rates over all age categories, for those who support Republican, younger ones have higher opposition rates. In fact, the same tendencies are observed from any other energy resources no matter they have lower opposition rate (solar power use) or higher one (coal mining) in average.</p>
 <p>This may mean that younger people are not only humans are responsible for the climate change (Question 1), but also are more likely to have interest in protection of environment. Republican party should pay attention to whether younger Republican will become more favor to nuclear uses, or their opinion will not change in the future.</p>
 <p>The next relevant attribute is income (or education) levels.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-26-1.png" width="1248" /></p>
-<p>As seen from above, while income levels are not related to opposition rates for Democrats, there seems to be a decreasing relationship for Republicans. As income and education levels are correlated, we see the similar relationship for education level, too. However, we are not sure whether the education level is a confounding factor or not, since it is difficult to come up with the reason why higher education drives only Republicans (not Democrats) to be in favor of nuclear power use more. Here is one of the limitation of our EDVA, but it can be a motivation for other research or policies.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-30-1.png" width="1248" /></p>
+<p>As seen from above, while income levels are not clearly related to opposition rates for Democrats, there seems to be a decreasing relationship for Republicans. As income and education levels are correlated, we see the similar relationship for education level, too. However, we are not sure whether the education level is a confounding factor or not, since it is difficult to come up with the reason why higher education drives only Republicans (not Democrats) to be in favor of nuclear power use more. Here is one of the limitation of our EDVA, but it can be a motivation for other research or policies.</p>
 <p>The last relevant attribute is sex. As seen from the plot below, there are relatively large difference between sex.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
-<p>Note that since some people think that nuclear power is useful to decrease the coal or oil burning, therefore effective to protect natural environment.
-The result above may signify that men are more like to think that way.</p>
-<p>Indeed, comparing this result with the one for coal mining, there are less differences between sex.
-As we mentioned earlier, it is probably consistent with the result of Question 1.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p>Note that since some people think that nuclear power is useful to decrease the coal or oil mining and therefore effective to protect natural environment.
+The result above may signify that men are more like to think that way than women.</p>
+<p>Indeed, comparing this result with the one for coal mining, male Democrats seem to be willing to protect the environment no less than female Democrats,
+which is probably consistent with the result of the recognition of impacts of human activities in Question 1 as we mentioned earlier.
+Though we do not show here, we observed very similar result for oil-gas mining, too.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <p>Lastly, we did not detect any relevant relationship with (1) regions, (2) whether one lives in metropolitan area or not, or (3) marital status, thereby omitted the results.</p>
+</div>
+<div id="question-4" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Question 4</h2>
+<p>Besides people’s perception of climate and environment problems, it’s important to know how willing are they to take actions to tackle those problems. (After all, actions speak louder than words.)</p>
+<p>In an survey conducted by the Pew center in 2019, people were asked if they would do things in their daily life to protect the environment. Specifically, the questions are:
+<img src="ENV6F1.png" alt="image.png" /></p>
+<p>To simplify the analysis, we aggregated the answers to those 5 questions and excluded all answers of refusal. We generate a new variable <code>EnvActCount</code> that equals the number of yes answers to the five questions.</p>
+<p>First, let’s see the overall distribution.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>We can see that Americans are generally willing to take some action to protect the environment: more than half are willing to do at least three of the five in their daily life.</p>
+<p>What’s more interesting is the factors affecting this. Naturally, we assume if someone fells his community is suffering from environmental problems, he would be more willing to take actions to combat them. This is confirmed by the data.</p>
+<p>(Note: in the questionnaire, the question asked was “How much, if at all, do you think global climate change is currently affecting your local community”, which isn’t exactly about the environment, but it’s reasonable to use that as a proxy.)</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>Indeed, if people think their community is more affected, they are more willing to take actions themselves to counter the effect.</p>
+<p>Though the wordings <code>Not too much</code> and <code>Some</code> sound similar, the order in the plot represents the order those options are presented in the questionnaire, so respondents would naturally perceive them are ordered as <code>Not at all</code>, <code>Not so much</code>, <code>Some</code>, <code>A great deal</code>.</p>
+<p>An even more interesting question is whether certain personality traits affect people’s willingness to take those actions. In the questionnaire, people were asked to rate themselves on the following scales from 1 to 5:
+- <code>Extroverted</code> to <code>Introverted</code>
+- <code>Hard-working</code> to <code>Lazy</code>
+- <code>Conventional thinker</code> to <code>Creative thinker</code>
+- <code>Calm</code> to <code>Nervous</code>
+- <code>Outgoing</code> to <code>Shy</code>
+- <code>Impulsive</code> to <code>Self-disciplined</code>
+- <code>Sympathetic</code> to <code>Unsympathetic</code>
+- <code>Disorganized</code> to <code>Organized</code>
+- <code>Analytical</code> to <code>Not analytical</code>
+- <code>Relaxed</code> to <code>Tense</code>
+- <code>Accepting of others</code> to <code>Critical of others</code>
+- <code>Intellectual</code> to <code>Not intellectual</code></p>
+<p>Self ratings on each of the scales has significant correlation with <code>EnvActCount</code>. This is not surprising since the sample size is large. Here we are presenting the most interesting results.</p>
+<p>We decided to control for people’s perception of the effect of climate change, because it is affected by people’s personalities, and we want to capture the direct effect of personality.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>Disorganized people tend to be more willing to act on climate change, even if they don’t feel their community is affected much. This is worth investigating since the difference is significant, while there’s no clear explanation for this.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p>Intellectual people’s willingness to act to protect the environment is more determined by their perception of how serious the problem is.</p>
+<p>A side note: though some of traits sound disapproving (e.g. disorganized), the number of people that identify themselves as of these traits aren’t small, so this won’t affect the validity of the analysis.</p>
+<p>A further step would be doing clustering or PCA on the personality traits, and observe the differences. However, since we have little knowledge in psychology, we won’t be able to interpret the results, so we chose not to include these.</p>
+</div>
+<div id="question-5" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Question 5</h2>
+<p>People’s views on climate change and environmental problems differ by the party the support. For example, supporters of the GOP tend to think that policies aimed at reducing the effect of climate change will hurt the economy, while the Democrats tend to think they have benefits.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>Similar trends appear in other climate and environment related issues.</p>
+<p>These association are on the individual level. If we aggregate them, we might be able to see a correlation with elections outcomes.</p>
+<p>We have Pew’s survey data about environment and climate change in 2018 and 2020, which are both election years (and the surveys are prior to elections). We used the House election data instead of Senate because all House seats but only one third of Senate seats are open for election every two years, which means there’s extra sources of variation for Senate elections. We didn’t use Presidential election because we don’t have survey data in 2016.</p>
+<p>Unfortunately, the survey data only allows for aggregation by census region (South, West, Northeast, and Midwest, each consisting of around 10 states). This means we will only have 4 data points for a year, which precludes regression and statistical tests. Nevertheless, the difference across the regions and the trends are very obvious.</p>
+<p>The four census regions are shown below.</p>
+<p>In both 2018 and 2020, we can see that if people think the government isn’t doing enough on climate and environment issues, they tend to support the Democratic party. Exceptions are animal and water protection. It seems the two are not so important.</p>
+<p>Note that the support for Democrats are calculated as the ratio of people who voted for a Democratic candidate in the census region. It’s not the average of average in each state.</p>
+<p>However, when we take the difference in the two years. It’s a different story. The trend has reversed. If more people fell the government is not doing enough on the issues, more people are voting for the GOP.</p>
+<p>What’s happening here? We should take note that from 2016 to 2018, the Republicans had majority in the House, while the Democrats took over the majority in 2018. Before elections, people are likely to blame the incumbent for not taking enough action.</p>
 
 </div>
 </div>
