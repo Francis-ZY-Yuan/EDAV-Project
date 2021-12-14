@@ -1,7 +1,7 @@
 # Conclusion
 
-We have investigate the relationship between individual attributes and attitudes towards environmental issues.
-Main conclusions are the followings:
+We have investigated the relationship between individual attributes and attitudes towards environmental issues or political actions.
+Main conclusions are the followings. One possible future task would be to conduct similar analyses for dataset of different countries where usual climate, recently experienced climate change, political structures, and culture can be all different. We could compare the result with one for US to derive the universal tendencies.:
 
 - Q1 and Q3: Age, income, education, and sex are related with opinions on a wide range of environmental issues such as 
 whether human activities contribute to global climate change or 
