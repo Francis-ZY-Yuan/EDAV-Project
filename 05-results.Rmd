@@ -2,7 +2,7 @@
 
 - Please note that here we simply refer to those who support the Republican party by simply "Republicans" and the Democratic Party by "Democrats."
 
-- We tried the chi-squared independence test for every result given here. Due to the large sample (N~3600), unless otherwise stated, a visible relationship in a mosaic plot almost surely meant a rejection of the null hypotheses of independence at least in this analysis with p-values less than around 5%. On the other hand, not clear relationship in a mosaic plot sometimes also led to a rejection in this analysis with the same p-value range. 
+- We tried the chi-squared independence test for every result given here for Q1-3. Due to the large sample (N~3600), unless otherwise stated, a visible relationship in a mosaic plot almost surely meant a rejection of the null hypotheses of independence at least in this analysis with p-values less than around 5%. On the other hand, not clear relationship in a mosaic plot sometimes also led to a rejection in this analysis with the same p-value range. 
 
 ## Question 1
 
