@@ -145,7 +145,7 @@ House_2018_2020 = House_elec %>%
 ELEC_2018 = House_2018_2020 %>% filter(year==2018)
 ```
 
-```{r}
+```{r }
 ELEC_2018_REGION = inner_join(ELEC_2018, st_drop_geometry(states()), by=c("state_po"="STUSPS")) %>%
     group_by(REGION) %>%
     summarise(DEM=sum(Dem), REP=sum(Rep)) %>%
