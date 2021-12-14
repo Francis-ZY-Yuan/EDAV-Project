@@ -12,7 +12,7 @@ W67 = read.xlsx("./data/W67_May20/ATP W67 Weighted Resample.xlsx") %>% tibble()
 ```
 
 Note that our data have weights which correct the potential bias of the attributes of the respondents of the questionnaires based on some other referenced large data. All the results in the existing report is based on those weights. Therefore, we should also consider those weights when we aggregate samples into graphs. However, for the following reasons, we employ simple aggregation for Question 1-3 (that is, just by simply counting the number of samples in the raw data, instead of aggregating the weights attached on the raw data).
-Question 4-5 are based on the resampling method written below.
+Question 4-5 are based on the resampled dataset with n=100,000 by the method written below.
 
   - Many EDVA packages including those we used in this analyses cannot deal with data with weights. Hence, it requires quite additional work.
   
