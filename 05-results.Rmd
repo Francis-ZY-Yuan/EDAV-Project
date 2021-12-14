@@ -2,7 +2,7 @@
 
 - Please note that here we simply refer to those who support the Republican party by simply "Republicans" and the Democratic Party by "Democrats."
 
-- We tried the chi-squared independence test for every result given here. Unless otherwise stated, a visible relationship in a mosaic plot surely meant a rejection of the null hypotheses of independence at least in this analysis. On the other hand, not clear relationship in a mosaic plot sometimes also led a rejection in this analysis. 
+- We tried the chi-squared independence test for every result given here. Due to the large sample (N~3600), unless otherwise stated, a visible relationship in a mosaic plot almost surely meant a rejection of the null hypotheses of independence at least in this analysis with p-values less than around 5%. On the other hand, not clear relationship in a mosaic plot sometimes also led to a rejection in this analysis with the same p-value range. 
 
 ## Question 1
 
@@ -219,7 +219,8 @@ ggplot(data = findf55_Q3_to_NA) +
   theme(axis.title.x=element_blank())+xlab("Income levels")
 ```
 
-As seen from above, while income levels are not clearly related to opposition rates for Democrats, there seems to be a decreasing relationship for Republicans. As income and education levels are correlated, we see the similar relationship for education level, too. However, we are not sure whether the education level is a confounding factor or not, since it is difficult to come up with the reason why higher education drives only Republicans (not Democrats) to be in favor of nuclear power use more. Here is one of the limitation of our EDVA, but it can be a motivation for other research or policies.
+As seen from above, while income levels are not clearly related to opposition rates for Democrats, there seems to be a decreasing relationship for Republicans. As income and education levels are correlated, we see the similar relationship for education level, too. However, we are not sure whether the education level is a confounding factor or not, since it is difficult to come up with the reason why higher education drives only Republicans (not Democrats) to be in favor of nuclear power use more. Perhaps, their 
+professions have something to do with their views on environmental issue, which cannot be answered since there are no information for their professions in the survey. Here is one of the limitation of our EDVA, but it can be a motivation for other research or policies.
 
 The last relevant attribute is sex. As seen from the plot below, there are relatively large difference between sex.
 

@@ -3,15 +3,16 @@
 We have investigate the relationship between individual attributes and attitudes towards environmental issues.
 Main conclusions are the followings:
 
-- Age, income, education, and sex are related with opinions on a wide range of environmental issues such as 
+- Q1 and Q3: Age, income, education, and sex are related with opinions on a wide range of environmental issues such as 
 whether human activities contribute to global climate change or 
 whether we should have more nuclear power uses.
-The existence or the direction of impact can have intricate different (asymmetric) for each political party which is worth investigating further.
+The existence or the direction of impact can be intricately different (asymmetric) for each political party whose reasons are worth investigating further.
+Policy makers should pay attention to these asymmetric tendencies when they are willing to pursue environmental policies by getting support from the large society.
 
-- Republicans are not only likely to attribute climate change to just a natural phenomenon but also they are less likely to observe climate change affecting their communities in the first place.
+- Q2: Republicans are not only likely to attribute climate change to just a natural phenomenon but also they are less likely to observe climate change affecting their communities in the first place.
 Therefore, we should first review research regarding the existence of impact of climate change on our communities to start discussing environmental policies.
 
-- Recognition of contribution of human activities to global climate change has a far larger effect than one's personality (being organized or intellectual) on how many actions one takes to protect environment, which suggests that policy makers should cultivate people's understandings if they want to pursue environmental protection.
+- Q4: Recognition of contribution of human activities to global climate change has a far larger effect than one's personality (being organized or intellectual) on how many actions one takes to protect environment, which suggests that policy makers should cultivate people's understandings if they want to pursue environmental protection.
 
-- Environmental issues may have already been (and will be) highly influential to national elections in recent years (in the future).
+- Q5: Environmental issues may have already been (and will be) highly influential to national elections in recent years (in the future).
 
